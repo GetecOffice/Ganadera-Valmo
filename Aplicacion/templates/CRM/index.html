@@ -1,0 +1,149 @@
+{% extends "include/header.html" %}
+
+{% load static %}
+
+{% block title %} GESTION DE VENTAS {% endblock %}
+
+{% block body %}
+
+{% if ServiciosWeb.Servicio == True or perms.Aplicacion.add_tblserviciosweb %}
+<div class="card card-hdr">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-10">
+                <h1>CRM - GESTIÓN DE VENTAS</h1>
+            </div>
+
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if perms.Aplicacion.view_tblclientes %}
+        <div class="table-responsive py-1">
+            <table class="tabla_id">
+                <thead>
+                    <tr>
+                        <th class="th-responsive">RUTA</th>
+                        <th class="th-responsive">LOCALIDAD</th>
+                        <th class="th-responsive">ACTIVIDAD</th>
+                        <th class="th-responsive">NOMBRE DEL CLIENTE</th>
+                        <th class="th-responsive">CORREO ELECTRÓNICO</th>
+                        <th class="th-responsive">TELÉFONO</th>
+                        <th class="th-responsive">CONDICIÓN</th>
+                        <th class="th-responsive">ESTADO DE VENTA</th>
+                        <th class="th-responsive">VALOR POTENCIAL DE LA VENTA</th>
+                        <th class="th-responsive">FECHA DE CIERRE ESTIMADA</th>
+                        <th class="th-responsive">FECHA DE CIERRE</th>
+                        <th class="th-responsive">RESPONSABLE</th>
+                        <th class="th-responsive">VOLUMEN DE OPERACIÓN</th>
+                        <th class="th-responsive">TIPO DE GANADO</th>
+                        <th class="th-responsive">DESTINO DE OPERACIÓN</th>
+                        <th class="th-responsive">TIPO DE ALIMENTACIÓN</th>
+
+                        <th class="th-responsive dnone"></th>
+                        <th class="th-responsive dnone"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Dato in TGestionVentas %}
+                    <tr>
+                        <td>
+                            <h6 class="td-responsive">RUTA:</h6>
+                            {{Dato.IDContacto__IDRuta__Descripcion}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">LOCALIDAD:</h6>
+                            {{Dato.IDContacto_id__Localidad }}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">ACTIVIDAD:</h6>
+                            {{Dato.SelectActividad }}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">NOMBRE DEL CLIENTE:</h6>
+                            {{Dato.IDContacto_id__Nombre }} {{Dato.IDContacto_id__PrimerApellido }}
+                            {{Dato.IDContacto_id__SegundoApellido }}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">CORREO ELECTRÓNICO:</h6>
+                            {{Dato.IDContacto_id__email}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">TELÉFONO:</h6>
+                            {{Dato.IDContacto_id__NoCelular}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">CONDICIÓN:</h6>
+                            {{Dato.IDContacto__IDTipo__Descripcion}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">ESTADO DE VENTA:</h6>
+                            {{Dato.IDEstadoVenta_id__Descripcion}}
+                        </td>
+
+                        <td>
+                            <h6 class="td-responsive">VALOR POTENCIAL DE LA VENTA:</h6>
+                            $ {{Dato.MontoOpo}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">FECHA DE CIERRE ESTIMADA:</h6>
+                            {{Dato.FechaCierreEstim}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">FECHA DE CIERRE:</h6>
+                            {{Dato.FechaDeCierre}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">RESPONSABLE:</h6>
+                            {{Dato.IDVendedor_id__Nombre}} {{Dato.IDVendedor_id__Apellidos}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">VOLUMEN DE OPERACIÓN:</h6>
+                            {{Dato.Volumen}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">TIPO DE GANADO:</h6>
+                            {{Dato.SelectTipoGanado}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">DESTINO DE OPERACIÓN:</h6>
+                            {{Dato.SelectDestino}}
+                        </td>
+                        <td>
+                            <h6 class="td-responsive">TIPO DE ALIMENTACIÓN:</h6>
+                            {{Dato.SelectAlimentacion}}
+                        </td>
+
+
+                        <td class="td-salto"></td>
+                        <td class="td-salto"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="row centrar">
+            <h6 class="h6-form">
+                <i class="fa fa-ban"></i> <i class="fa fa-close"></i>
+                No tienes los permisos necesarios para ver el contenido de la tabla
+                <i class="fa fa-close"></i> <i class="fa fa-ban"></i>
+            </h6>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% else %}
+<script>
+    window.location.href = "{% url 'NoPago' %}";
+</script>
+{% endif %}
+
+{% endblock %}
