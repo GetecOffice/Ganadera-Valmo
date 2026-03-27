@@ -361,6 +361,7 @@ class tblCRMEstadoOportu(models.Model):
             
 class tblCRMVendedores(models.Model):
     ID = models.AutoField(primary_key=True)
+    Clave = models.CharField(max_length=15, null=True)    
     NomCorto = models.CharField(max_length=80, null=True)
     Nombre = models.CharField(max_length=80, null=True)
     Apellidos = models.CharField(max_length=80, null=True)
@@ -369,6 +370,7 @@ class tblCRMVendedores(models.Model):
     
 class tblCRMContactos(models.Model):
     ID = models.AutoField(primary_key=True)
+    Clave = models.CharField(max_length=15, null=True)
     IDRuta = models.ForeignKey(tblCRMRutas, on_delete=models.DO_NOTHING, null=True)
     IDCliente = models.ForeignKey(tblClientes, on_delete=models.DO_NOTHING, null=True)
     IDTipo = models.ForeignKey(tblCRMTipoContacto, on_delete=models.DO_NOTHING, null=True)    

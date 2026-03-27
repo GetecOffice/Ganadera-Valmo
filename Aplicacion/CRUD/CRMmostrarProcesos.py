@@ -16,4 +16,4 @@ def TablaGestionVentas(request):
     ServiciosWeb = servicioActivo()
 
     
-    return render(request, 'CRM/index.html',{'grupos': grupos,'ServiciosWeb': ServiciosWeb,'TGestionVentas': TGestionVentas})
+    return render(request, 'CRM Proceso/index.html',{'grupos': grupos,'ServiciosWeb': ServiciosWeb,'TGestionVentas': TGestionVentas})

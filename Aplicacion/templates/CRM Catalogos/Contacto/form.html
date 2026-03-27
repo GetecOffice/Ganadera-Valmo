@@ -1,0 +1,326 @@
+{% extends "include/header.html" %}
+
+{% load static %}
+
+{% block title %}AGREGAR CLIENES{% endblock %}
+
+{% block body %}
+
+{% if ServiciosWeb.Servicio == True or perms.Aplicacion.add_tblserviciosweb %}
+
+{% if perms.Aplicacion.add_tblclientes %}
+<div class="card card-hdr">
+    <div class="card-body">
+        <h1>
+            <a href="{% url 'T-Cliente' %}" class="btn h6-form"><i class="fa-solid fa-arrow-left"></i></a>
+            AGREGAR CLIENTE
+        </h1>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <form action="{% url 'GCRM_Contacto'%}" method="POST" autocomplete="off">{% csrf_token %}
+
+            {% if clave is not None %}
+            <input type="hidden" class=" form-control" name="clave" value="{{ clave }}">
+            {% else %}
+            <input type="hidden" class=" form-control" name="clave" value="{{ ultimo_folio }}">
+            {% endif %}
+            <input type="hidden" class=" form-control" name="tecnico" value="{{ user.first_name }} {{user.last_name}}">
+
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">RUTA <label>*</label></h6>
+                    <select class="select2 form-control col-12" name="ruta" required>
+                        {% if nombre is not None %}
+                        <option value="{{ ruta }}">-------{{ FARuta.Descripcion }}-------</option>
+                        {% endif %}
+                        {% for Ruta in FRuta %}
+                        <option value="{{ Ruta.ID }}">{{ Ruta.Descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">CLIENTE <label>*</label></h6>
+                    <select class="select2 form-control col-12" name="cliente" required>
+                        {% if nombre is not None %}
+                        <option value="{{ cliente }}">-------{{ FACliente.Nombre }}-------</option>
+                        {% endif %}
+                        {% for Cliente in FCliente %}
+                        <option value="{{ Cliente.ID }}">{{ Cliente.Nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">TIPO CONTACTO <label>*</label></h6>
+                    <select class="select2 form-control col-12" name="tcontacto" required>
+                        {% if nombre is not None %}
+                        <option value="{{ tcontacto }}">-------{{ FATipoContacto.Descripcion }}-------</option>
+                        {% endif %}
+                        {% for TipoContacto in FTipoContacto %}
+                        <option value="{{ TipoContacto.ID }}">{{ TipoContacto.Descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">NOMBRE <label>*</label></h6>
+                    {% if nombre is not None %}
+                    <input type="text" autofocus name="nombre" class=" form-control"
+                        placeholder="Ingrese el nombre (obligatorio)" value="{{nombre}}" required>
+                    {% else %}
+                    <input type="text" autofocus name="nombre" class=" form-control"
+                        placeholder="Ingrese el nombre (obligatorio)" required>
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">PRIMER APELLIDO</h6>
+                    {% if papellido is not None %}
+                    <input type="text" name="papellido" class=" form-control" placeholder="Ingrese el primer apellido"
+                        value="{{ papellido }}">
+                    {% else %}
+                    <input type="text" name="papellido" class=" form-control" placeholder="Ingrese el primer apellido">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">SEGUNDO APELLIDO</h6>
+                    {% if sapellido is not None %}
+                    <input type="text" name="sapellido" class=" form-control" placeholder="Ingrese el segundo apellido"
+                        value="{{ sapellido }}">
+                    {% else %}
+                    <input type="text" name="sapellido" class=" form-control" placeholder="Ingrese el segundo apellido">
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">FECHA DE NACIMIENTO</h6>
+                    {% if fecha is not None %}
+                    <input type="date" name="fecha" class=" form-control" placeholder="Ingrese la fecha"
+                        value="{{fecha}}">
+                    {% else %}
+                    <input type="date" name="fecha" class=" form-control" placeholder="Ingrese la fecha">
+                    {% endif %}
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">NUMERO CELULAR</h6>
+                    {% if numero is not None %}
+                    <input type="text" name="numeroC" class=" form-control" placeholder="Ingrese el número celular"
+                        value="{{numero}}">
+                    {% else %}
+                    <input type="text" name="numeroC" class=" form-control" placeholder="Ingrese el número celular">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">EMAIL</h6>
+                    {% if email is not None %}
+                    <input type="email" name="email" class=" form-control" placeholder="Ingrese el email"
+                        value="{{email}}">
+                    {% else %}
+                    <input type="email" name="email" class=" form-control" placeholder="Ingrese el email">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">TELÉFONO DE OFICINA</h6>
+                    {% if numeroO is not None %}
+                    <input type="text" name="numeroO" class=" form-control" placeholder="Ingrese el teléfono de oficina"
+                        value="{{numeroO}}">
+                    {% else %}
+                    <input type="text" name="numeroO" class=" form-control"
+                        placeholder="Ingrese el teléfono de oficina">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">DIRECCIÓN</h6>
+                    {% if direccion is not None %}
+                    <input type="text" name="direccion" class=" form-control" placeholder="Ingrese la dirección"
+                        value="{{ direccion }}">
+                    {% else %}
+                    <input type="text" name="direccion" class=" form-control" placeholder="Ingrese la dirección">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">NUMERO</h6>
+                    {% if numerod is not None %}
+                    <input type="text" name="numerod" class=" form-control" placeholder="Ingrese el numero exterior"
+                        value="{{numerod}}">
+                    {% else %}
+                    <input type="text" name="numerod" class=" form-control" placeholder="Ingrese el numero exterior">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">REFERENCIA</h6>
+                    {% if referencia is not None %}
+                    <input type="text" name="referencia" class=" form-control" placeholder="Ingrese una referencia"
+                        value="{{referencia}}">
+                    {% else %}
+                    <input type="text" name="referencia" class=" form-control" placeholder="Ingrese una referencia">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">CÓDIGO POSTAL</h6>
+                    {% if cp is not None %}
+                    <input type="text" name="cp" class=" form-control" placeholder="Ingrese el codigo postal"
+                        value="{{cp}}">
+                    {% else %}
+                    <input type="text" name="cp" class=" form-control" placeholder="Ingrese el codigo postal">
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Pais<label>*</label></h6>
+                    {% if Pais is not None %}
+                    <input list="listaPais" class="form-control col-12" name="Pais" value="{{Pais}}" required>
+                    {% else %}
+                    <input list="listaPais" class="form-control col-12" name="Pais" required>
+                    {% endif %}
+                    <datalist id="listaPais">
+
+                        {% for Pais in FPais %}
+                        <option value="{{ Pais }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Estado<label>*</label></h6>
+                    {% if Estado is not None %}
+                    <input list="listaEstado" class="form-control col-12" name="Estado" value="{{Estado}}" required>
+                    {% else %}
+                    <input list="listaEstado" class="form-control col-12" name="Estado" required>
+                    {% endif %}
+                    <datalist id="listaEstado">
+
+                        {% for Estado in FEstado %}
+                        <option value="{{ Estado }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Municipio<label>*</label></h6>
+                    {% if Municipio is not None %}
+                    <input list="listaMunicipio" class="form-control col-12" name="Municipio" value="{{Municipio}}"
+                        required>
+                    {% else %}
+                    <input list="listaMunicipio" class="form-control col-12" name="Municipio" required>
+                    {% endif %}
+                    <datalist id="listaMunicipio">
+
+                        {% for Municipio in FMunicipio %}
+                        <option value="{{ Municipio }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Localidad<label>*</label></h6>
+                    {% if Localidad is not None %}
+                    <input list="listaLocalidad" class="form-control col-12" name="Localidad" value="{{Localidad}}"
+                        required>
+                    {% else %}
+                    <input list="listaLocalidad" class="form-control col-12" name="Localidad" required>
+                    {% endif %}
+                    <datalist id="listaLocalidad">
+
+                        {% for Localidad in FLocalidad %}
+                        <option value="{{ Localidad }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Colonia<label>*</label></h6>
+                    {% if Colonia is not None %}
+                    <input list="listaColonia" class="form-control col-12" name="Colonia" value="{{Colonia}}" required>
+                    {% else %}
+                    <input list="listaColonia" class="form-control col-12" name="Colonia" required>
+                    {% endif %}
+                    <datalist id="listaColonia">
+
+                        {% for Colonia in FColonia %}
+                        <option value="{{ Colonia }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+            </div>
+
+
+
+            <div class="form-group form-check mb-3">
+                {% if guardar %}
+                <input type="checkbox" class="form-check-input" id="guardar" name="guardar-datos" checked>
+                {% else %}
+                <input type="checkbox" class="form-check-input" id="guardar" name="guardar-datos">
+                {% endif %}
+                <label class="form-check-label" for="guardar" data-toggle="tooltip" data-placement="top"
+                    title="Vuelve a llenar los campos del formulario">Almacenar datos</label>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary agregarBoton" name="agregar" id="agregarBoton">Guardar y
+                    agregar otro</button>
+                <button type="submit" class="btn btn-success salirBoton" name="salir" id="salirBoton">Guardar y
+                    salir</button>
+                <a href="{% url 'T-Cliente'%}">
+                    <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+    document.getElementById("id_CP").addEventListener("change", function () {
+        let cp = this.value;
+
+        fetch(`/obtener-cp/?cp=${cp}`)
+            .then(response => response.json())
+            .then(data => {
+
+                let coloniaSelect = document.getElementById("id_Colonia");
+                coloniaSelect.innerHTML = "";
+
+                data.colonias.forEach(col => {
+                    let option = document.createElement("option");
+                    option.value = col;
+                    option.text = col;
+                    coloniaSelect.appendChild(option);
+                });
+
+                document.getElementById("id_Municipio").value = data.municipio;
+                document.getElementById("id_Estado").value = data.estado;
+                document.getElementById("id_Pais").value = "México";
+
+            });
+    });
+</script>
+{% else %}
+<div class="row centrar">
+    <h6 class="h6-form">
+        <i class="fa fa-ban"></i> <i class="fa fa-close"></i>
+        No tienes los permisos necesarios para agregar el contenido de la tabla
+        <i class="fa fa-close"></i> <i class="fa fa-ban"></i>
+    </h6>
+</div>
+{% endif %}
+
+{% else %}
+<script>
+    window.location.href = "{% url 'NoPago' %}";
+</script>
+{% endif %}
+
+{% endblock %}

@@ -435,6 +435,57 @@
                     {% endif %}
                 </ul>
             </li>
+            <li class="nav-heading">CATALOGOS CRM</li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#CRM-CATALOGOS" data-bs-toggle="collapse" href="#">
+                    <span>Catálogos CRM</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="CRM-CATALOGOS" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{% url 'TCRM_Rutas' %}">
+                            <span>Rutas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'TCRM_Acciones' %}">
+                            <span>Acciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'TCRM_Contacto' %}">
+                            <span>Contactos</span>
+                        </a>
+                    </li>  
+                    <li>
+                        <a href="{% url 'TCRM_Vendedores' %}">
+                            <span>Vendedores</span>
+                        </a>
+                    </li>                     
+
+                    <li>
+                        <a href="{% url 'TCRM_TipoContacto' %}">
+                            <span>Tipo de contacto</span>
+                        </a>
+                    </li>                    
+                    <li>
+                        <a href="{% url 'TCRM_EstadoOportunidad' %}">
+                            <span>Estado de oportunidades</span>
+                        </a>
+                    </li>                        
+                    <li>
+                        <a href="{% url 'TCRM_BitacoraInteres' %}">
+                            <span>Bitacora de interacciones</span>
+                        </a>
+                    </li>                                   
+                </ul>
+            </li>            
+            <li class="nav-heading">PROCESO CRM</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'TGestionVentas' %}">
+                    <span>Proceso CRM</span>
+                </a>
+            </li>            
             <li class="nav-heading">Contenido-SubTablas</li>
 
             <li class="nav-item">
@@ -531,11 +582,7 @@
                     <span>Página</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{% url 'TGestionVentas' %}">
-                    <span>CRM</span>
-                </a>
-            </li>
+
             <!-- <li class="nav-heading">Presentacion</li> -->
 
         </ul>

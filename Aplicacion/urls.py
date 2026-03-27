@@ -6,7 +6,9 @@ from Aplicacion.CRUD import mostrarCatalogos, mostrarProcesos, mostrarSubTabla
 from Aplicacion.CRUD import guardarCatalogos, guardarProcesos, guardarSubTabla
 from Aplicacion.CRUD import editarCatalogos, editarProcesos, editarSubTabla
 from Aplicacion.CRUD import reportes, DescargaPDF, DescargaExcel, CopiaDeSeguridad, CopiaAMysql, cliente
-from Aplicacion.CRUD import presentacion, Correo, crm
+from Aplicacion.CRUD import presentacion, Correo
+from Aplicacion.CRUD import CRMactualizarCatalogos, CRMeditarCatalogos, CRMformularioCatalogos, CRMguardarCatalogos, CRMmostrarCatalogos
+from Aplicacion.CRUD import CRMmostrarProcesos
 
 # from .views import PDFView formularioCatalogos
 from django.contrib.auth.views import LoginView, LogoutView
@@ -450,6 +452,53 @@ urlpatterns = [
 
      path('Correo/', Correo.index, name="correos"),
      
+     # CRM catalogos formulario
+     path('Formulario_Acciones/', CRMformularioCatalogos.FormularioAcciones, name="FCRM_Acciones"),
+     path('Formulario_TipoContacto/', CRMformularioCatalogos.FormularioTipoContacto, name="FCRM_TipoContacto"),
+     path('Formulario_Rutas/', CRMformularioCatalogos.FormularioRutas, name="FCRM_Rutas"),
+     path('Formulario_EstadoOportunidad/', CRMformularioCatalogos.FormularioEstadoOportunidad, name="FCRM_EstadoOportunidad"),
+     path('Formulario_Vendedores/', CRMformularioCatalogos.FormularioVendedores, name="FCRM_Vendedores"),
+     path('Formulario_Contacto/', CRMformularioCatalogos.FormularioContacto, name="FCRM_Contacto"),
+     path('Formulario_BitacoraInteres/', CRMformularioCatalogos.FormularioBitacoraInteres, name="FCRM_BitacoraInteres"),
+
+     # CRM catalogos editar
+     path('Editar_Acciones/', CRMeditarCatalogos.EditarAcciones, name="ECRM_Acciones"),
+     path('Editar_TipoContacto/', CRMeditarCatalogos.EditarTipoContacto, name="ECRM_TipoContacto"),
+     path('Editar_Rutas/', CRMeditarCatalogos.EditarRutas, name="ECRM_Rutas"),
+     path('Editar_EstadoOportunidad/', CRMeditarCatalogos.EditarEstadoOportunidad, name="ECRM_EstadoOportunidad"),
+     path('Editar_Vendedores/', CRMeditarCatalogos.EditarVendedores, name="ECRM_Vendedores"),
+     path('Editar_Contacto/', CRMeditarCatalogos.EditarContacto, name="ECRM_Contacto"),
+     path('Editar_BitacoraInteres/', CRMeditarCatalogos.EditarBitacoraInteres, name="ECRM_BitacoraInteres"),
+
+     # CRM catalogos actualizar
+     path('Actualizar_Acciones/', CRMactualizarCatalogos.actualizarAcciones, name="ACRM_Acciones"),
+     path('Actualizar_TipoContacto/', CRMactualizarCatalogos.actualizarTipoContacto, name="ACRM_TipoContacto"),
+     path('Actualizar_Rutas/', CRMactualizarCatalogos.actualizarRutas, name="ACRM_Rutas"),
+     path('Actualizar_EstadoOportunidad/', CRMactualizarCatalogos.actualizarEstadoOportunidad, name="ACRM_EstadoOportunidad"),
+     path('Actualizar_Vendedores/', CRMactualizarCatalogos.actualizarVendedores, name="ACRM_Vendedores"),
+     path('Actualizar_Contacto/', CRMactualizarCatalogos.actualizarContacto, name="ACRM_Contacto"),
+     path('Actualizar_BitacoraInteres/', CRMactualizarCatalogos.actualizarBitacoraInteres, name="ACRM_BitacoraInteres"),
+
+     # CRM catalogos guardar
+     path('Guardar_Acciones/', CRMguardarCatalogos.guardarAcciones, name="GCRM_Acciones"),
+     path('Guardar_TipoContacto/', CRMguardarCatalogos.guardarTipoContacto, name="GCRM_TipoContacto"),
+     path('Guardar_Rutas/', CRMguardarCatalogos.guardarRutas, name="GCRM_Rutas"),
+     path('Guardar_EstadoOportunidad/', CRMguardarCatalogos.guardarEstadoOportunidad, name="GCRM_EstadoOportunidad"),
+     path('Guardar_Vendedores/', CRMguardarCatalogos.guardarVendedores, name="GCRM_Vendedores"),
+     path('Guardar_Contacto/', CRMguardarCatalogos.guardarContacto, name="GCRM_Contacto"),
+     path('Guardar_BitacoraInteres/', CRMguardarCatalogos.guardarBitacoraInteres, name="GCRM_BitacoraInteres"),
+
+     # CRM catalogos mostrar
+     path('Mostrar_Acciones/', CRMmostrarCatalogos.TablaAcciones, name="TCRM_Acciones"),
+     path('Mostrar_TipoContacto/', CRMmostrarCatalogos.TablaTipoContacto, name="TCRM_TipoContacto"),
+     path('Mostrar_Rutas/', CRMmostrarCatalogos.TablaRutas, name="TCRM_Rutas"),
+     path('Mostrar_EstadoOportunidad/', CRMmostrarCatalogos.TablaEstadoOportunidad, name="TCRM_EstadoOportunidad"),
+     path('Mostrar_Vendedores/', CRMmostrarCatalogos.TablaVendedores, name="TCRM_Vendedores"),
+     path('Mostrar_Contacto/', CRMmostrarCatalogos.TablaContacto, name="TCRM_Contacto"),
+     path('Mostrar_BitacoraInteres/', CRMmostrarCatalogos.TablaBitacoraInteres, name="TCRM_BitacoraInteres"),
+
+     
      # CRM
-     path('Gestion_de_clientes_y_ventas/', crm.TablaGestionVentas, name="TGestionVentas"),
+     path('Gestion_de_clientes_y_ventas/', CRMmostrarProcesos.TablaGestionVentas, name="TGestionVentas"),
+     
 ]
