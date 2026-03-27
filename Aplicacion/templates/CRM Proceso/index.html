@@ -13,7 +13,23 @@
             <div class="col-10">
                 <h1>CRM - GESTIÓN DE VENTAS</h1>
             </div>
-
+            <div class="col-2">
+                {% if perms.Aplicacion.add_tblclientes %}
+                <a href="{% url 'FCRM_Oportunidades'%}">
+                    <button type="button" class="btn button-add col-12">
+                        <i class="fa fa-plus"></i> AGREGAR
+                    </button>
+                </a>
+                {% else %}
+                <div class="row centrar">
+                    <h6 class="h6-form">
+                        <i class="fa fa-ban"></i> <i class="fa fa-close"></i>
+                        No tienes los permisos necesarios para agregar contenido a la tabla
+                        <i class="fa fa-close"></i> <i class="fa fa-ban"></i>
+                    </h6>
+                </div>
+                {% endif %}
+            </div>
         </div>
 
         {% if messages %}
@@ -29,6 +45,7 @@
             <table class="tabla_id">
                 <thead>
                     <tr>
+                        <th class="th-responsive">FOLIO</th>
                         <th class="th-responsive">RUTA</th>
                         <th class="th-responsive">LOCALIDAD</th>
                         <th class="th-responsive">ACTIVIDAD</th>
@@ -53,6 +70,10 @@
                 <tbody>
                     {% for Dato in TGestionVentas %}
                     <tr>
+                        <td>
+                            <h6 class="td-responsive">RUTA:</h6>
+                            {{Dato.Clave}}
+                        </td>                        
                         <td>
                             <h6 class="td-responsive">RUTA:</h6>
                             {{Dato.IDContacto__IDRuta__Descripcion}}

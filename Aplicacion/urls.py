@@ -8,7 +8,7 @@ from Aplicacion.CRUD import editarCatalogos, editarProcesos, editarSubTabla
 from Aplicacion.CRUD import reportes, DescargaPDF, DescargaExcel, CopiaDeSeguridad, CopiaAMysql, cliente
 from Aplicacion.CRUD import presentacion, Correo
 from Aplicacion.CRUD import CRMactualizarCatalogos, CRMeditarCatalogos, CRMformularioCatalogos, CRMguardarCatalogos, CRMmostrarCatalogos
-from Aplicacion.CRUD import CRMmostrarProcesos
+from Aplicacion.CRUD import CRMmostrarProcesos, CRMformularioProcesos, CRMguardarProcesos
 
 # from .views import PDFView formularioCatalogos
 from django.contrib.auth.views import LoginView, LogoutView
@@ -499,6 +499,8 @@ urlpatterns = [
 
      
      # CRM
-     path('Gestion_de_clientes_y_ventas/', CRMmostrarProcesos.TablaGestionVentas, name="TGestionVentas"),
+     path('Formulario_oportunidades/', CRMformularioProcesos.FormularioOportunidades, name="FCRM_Oportunidades"),
+     path('Mostrar_oportunidades/', CRMmostrarProcesos.TablaOportunidades, name="TCRM_Oportunidades"),
+     path('guardar_oportunidades/', CRMguardarProcesos.guardarOportunidad, name="GCRM_Oportunidades"),
      
 ]

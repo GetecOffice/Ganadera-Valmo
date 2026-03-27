@@ -42,7 +42,7 @@ def TablaVendedores(request):
 def TablaContacto(request):
     grupos = grupo_user(request)
     ServiciosWeb = servicioActivo()
-    TContactos = tblCRMContactos.objects.values('ID', 'IDRuta_id', 'IDCliente_id', 'IDTipo_id', 'Nombre',
+    TContactos = tblCRMContactos.objects.values('ID','Clave', 'IDRuta_id', 'IDCliente_id', 'IDTipo_id', 'Nombre',
     'PrimerApellido', 'SegundoApellido', 'FechaCumple', 'Direccion', 'Numero', 'Colonia', 'Localidad', 
     'Municipio', 'Estado', 'Pais', 'CP', 'Referencia', 'NoCelular', 'email', 'TelOficina',
     'IDCliente_id__Nombre', 'IDRuta_id__Descripcion', 'IDTipo_id__Descripcion'       

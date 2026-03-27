@@ -398,6 +398,7 @@ class tblCRMListaProdInteres(models.Model):
     
 class tblCRMOportunidades(models.Model):
     ID = models.AutoField(primary_key=True)
+    Clave = models.CharField(max_length=15, null=True)
     IDVendedor = models.ForeignKey(tblCRMVendedores, on_delete=models.DO_NOTHING, null=True)
     IDContacto = models.ForeignKey(tblCRMContactos, on_delete=models.DO_NOTHING, null=True)
     IDProducto = models.ForeignKey(tblProductos, on_delete=models.DO_NOTHING, null=True)
