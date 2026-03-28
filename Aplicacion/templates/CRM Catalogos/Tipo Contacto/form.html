@@ -11,7 +11,7 @@
 {% if perms.Aplicacion.add_tblestatus %}
 <div class="card card-hdr">
     <div class="card-body">
-        <h1>AGREGAR TIPO DE CONTACTO</h1>
+        <h1>FORMULARIO TIPO DE CONTACTO</h1>
 
         {% if messages %}
         {% for message in messages %}
@@ -56,7 +56,7 @@
                     agregar otro</button>
                 <button type="submit" class="btn btn-success salirBoton" name="salir">Guardar y
                     salir</button>
-                <a href="{% url 'TCRM_Acciones'%}">
+                <a href="{% url 'TCRM_TipoContacto'%}">
                     <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
                 </a>
             </div>

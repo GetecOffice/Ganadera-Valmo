@@ -1,0 +1,204 @@
+{% extends "include/header.html" %}
+
+{% load static %}
+
+{% block title %}AGREGAR CLIENES{% endblock %}
+
+{% block body %}
+
+{% if ServiciosWeb.Servicio == True or perms.Aplicacion.add_tblserviciosweb %}
+
+{% if perms.Aplicacion.add_tblclientes %}
+<div class="card card-hdr">
+    <div class="card-body">
+        <h1>
+            
+            EDITAR CONTACTO
+        </h1>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-primary{% endif %} notifications">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <form action="{% url 'ACRM_Contacto'%}" method="POST" autocomplete="off">{% csrf_token %}
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">RUTA <label>*</label></h6>
+                    <input type="hidden" name="id" value="{{TContacto.ID}}">
+                    <select class="select2 form-control col-12" name="ruta" required>
+                        <option value="{{ FiltradoRutas.ID }}">-------{{ FiltradoRutas.Descripcion }}-------</option>
+                        {% for Ruta in FRuta %}
+                        <option value="{{ Ruta.ID }}">{{ Ruta.Descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">CLIENTE <label>*</label></h6>
+                    <select class="select2 form-control col-12" name="cliente" required>
+                        <option value="{{ FiltradoCliente.ID }}">-------{{ FiltradoCliente.Nombre }}-------</option>
+                        {% for Cliente in FCliente %}
+                        <option value="{{ Cliente.ID }}">{{ Cliente.Nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">TIPO CONTACTO <label>*</label></h6>
+                    <select class="select2 form-control col-12" name="tcontacto" required>
+                        <option value="{{ FiltradoTipoContacto.ID }}">-------{{ FiltradoTipoContacto.Descripcion
+                            }}-------</option>
+                        {% for TipoContacto in FTipoContacto %}
+                        <option value="{{ TipoContacto.ID }}">{{ TipoContacto.Descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">NOMBRE <label>*</label></h6>
+                    <input type="text" autofocus name="nombre" class=" form-control"
+                        placeholder="Ingrese el nombre (obligatorio)" value="{{TContacto.Nombre}}" required>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">PRIMER APELLIDO</h6>
+                    <input type="text" name="papellido" class=" form-control" placeholder="Ingrese el primer apellido"
+                        value="{{ TContacto.PrimerApellido }}">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">SEGUNDO APELLIDO</h6>
+                    <input type="text" name="sapellido" class=" form-control" placeholder="Ingrese el segundo apellido"
+                        value="{{ TContacto.SegundoApellido }}">
+                </div>
+
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">FECHA DE NACIMIENTO</h6>
+                    <input type="date" name="fecha" class=" form-control" placeholder="Ingrese la fecha"
+                        value="{{ TContacto.FechaCumple|date:'Y-m-d' }}">
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">NUMERO CELULAR</h6>
+                    <input type="text" name="numeroC" class=" form-control" placeholder="Ingrese el número celular"
+                        value="{{TContacto.NoCelular}}">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">EMAIL</h6>
+                    <input type="email" name="email" class=" form-control" placeholder="Ingrese el email"
+                        value="{{TContacto.email}}">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">TELÉFONO DE OFICINA</h6>
+                    <input type="text" name="numeroO" class=" form-control" placeholder="Ingrese el teléfono de oficina"
+                        value="{{TContacto.TelOficina}}">
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">DIRECCIÓN</h6>
+                    <input type="text" name="direccion" class=" form-control" placeholder="Ingrese la dirección"
+                        value="{{ TContacto.Direccion }}">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">NUMERO</h6>
+                    <input type="text" name="numerod" class=" form-control" placeholder="Ingrese el numero exterior"
+                        value="{{TContacto.Numero}}">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">REFERENCIA</h6>
+                    <input type="text" name="referencia" class=" form-control" placeholder="Ingrese una referencia"
+                        value="{{TContacto.Referencia}}">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">CÓDIGO POSTAL</h6>
+                    <input type="text" name="cp" class=" form-control" placeholder="Ingrese el codigo postal"
+                        value="{{TContacto.CP}}">
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Pais<label>*</label></h6>
+                    <input list="listaPais" class="form-control col-12" name="Pais" value="{{TContacto.Pais}}">
+                    <datalist id="listaPais">
+                        {% for Pais in FPais %}
+                        <option value="{{ Pais }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Estado<label>*</label></h6>
+                    <input list="listaEstado" class="form-control col-12" name="Estado" value="{{TContacto.Estado}}">
+                    <datalist id="listaEstado">
+                        {% for Estado in FEstado %}
+                        <option value="{{ Estado }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Municipio<label>*</label></h6>
+                    <input list="listaMunicipio" class="form-control col-12" name="Municipio"
+                        value="{{TContacto.Municipio}}">
+                    <datalist id="listaMunicipio">
+                        {% for Municipio in FMunicipio %}
+                        <option value="{{ Municipio }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Localidad<label>*</label></h6>
+                    <input list="listaLocalidad" class="form-control col-12" name="Localidad"
+                        value="{{TContacto.Localidad}}">
+                    <datalist id="listaLocalidad">
+                        {% for Localidad in FLocalidad %}
+                        <option value="{{ Localidad }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <h6 class="h6-form">Colonia<label>*</label></h6>
+                    <input list="listaColonia" class="form-control col-12" name="Colonia" value="{{TContacto.Colonia}}">
+                    <datalist id="listaColonia">
+                        {% for Colonia in FColonia %}
+                        <option value="{{ Colonia }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary agregarBoton" name="agregar"
+                    id="agregarBoton">Confirmar</button>
+                <a href="{% url 'TCRM_Contacto'%}">
+                    <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+{% else %}
+<div class="row centrar">
+    <h6 class="h6-form">
+        <i class="fa fa-ban"></i> <i class="fa fa-close"></i>
+        No tienes los permisos necesarios para agregar el contenido de la tabla
+        <i class="fa fa-close"></i> <i class="fa fa-ban"></i>
+    </h6>
+</div>
+{% endif %}
+
+{% else %}
+<script>
+    window.location.href = "{% url 'NoPago' %}";
+</script>
+{% endif %}
+
+{% endblock %}

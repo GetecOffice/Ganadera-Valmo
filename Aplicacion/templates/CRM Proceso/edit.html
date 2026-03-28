@@ -13,7 +13,7 @@
     <div class="card-body">
         <h1>
             <a href="{% url 'T-Cliente' %}" class="btn h6-form"><i class="fa-solid fa-arrow-left"></i></a>
-            AGREGAR OPORTUNIDAD
+            EDITAR OPORTUNIDAD
         </h1>
 
         {% if messages %}
@@ -24,22 +24,13 @@
         {% endfor %}
         {% endif %}
 
-        <form action="{% url 'GCRM_Oportunidades'%}" method="POST" autocomplete="off">{% csrf_token %}
-
-            {% if clave is not None %}
-            <input type="hidden" class=" form-control" name="clave" value="{{ clave }}">
-            {% else %}
-            <input type="hidden" class=" form-control" name="clave" value="{{ ultimo_folio }}">
-            {% endif %}
-            <input type="hidden" class=" form-control" name="tecnico" value="{{ user.first_name }} {{user.last_name}}">
-
+        <form action="{% url 'ACRM_Oportunidades'%}" method="POST" autocomplete="off">{% csrf_token %}
             <div class="row fila">
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                    <input type="hidden" name="id" value="{{TOportunidad.ID}}">
                     <h6 class="h6-form">VENDEDOR <label>*</label></h6>
                     <select class="select2 form-control col-12" name="vendedor" required>
-                        {% if vendedor is not None %}
-                        <option value="{{ vendedor }}">-------{{ FAVendedor.Nombre }} {{ FAVendedor.Apellidos }}-------</option>
-                        {% endif %}
+                        <option value="{{ FiltradoVendedor.ID }}">-------{{ FiltradoVendedor.Nombre }} {{ FiltradoVendedor.Apellidos }}-------</option>
                         {% for dato in FVendedor %}
                         <option value="{{ dato.ID }}">{{ dato.Nombre }} {{ dato.Apellidos }}</option>
                         {% endfor %}
@@ -48,9 +39,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">CONTACTO <label>*</label></h6>
                     <select class="select2 form-control col-12" name="contacto" required>
-                        {% if contacto is not None %}
-                        <option value="{{ contacto }}">-------{{ FAContacto.Nombre }} {{ FAContacto.SegundoApellido }} {{ FAContacto.SegundoApellido }}-------</option>
-                        {% endif %}
+                        <option value="{{ FiltradoContacto.ID }}">-------{{ FiltradoContacto.Nombre }} {{ FiltradoContacto.PrimerApellido }} {{ FiltradoContacto.SegundoApellido }}-------</option>
                         {% for dato in FContacto %}
                         <option value="{{ dato.ID }}">{{ dato.Nombre }}
                             {{ dato.PrimerApellido }} {{ dato.SegundoApellido }}</option>
@@ -60,9 +49,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">PRODUCTO <label>*</label></h6>
                     <select class="select2 form-control col-12" name="producto" required>
-                        {% if producto is not None %}
-                        <option value="{{ producto }}">-------{{ FAProducto.Descripcion }}-------</option>
-                        {% endif %}
+                        <option value="{{ FiltradoProducto.ID }}">-------{{ FiltradoProducto.Descripcion }}-------</option>
                         {% for dato in FProductos %}
                         <option value="{{ dato.ID }}">{{ dato.Descripcion }}</option>
                         {% endfor %}
@@ -71,9 +58,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">ESTADO DE VENTA <label>*</label></h6>
                     <select class="select2 form-control col-12" name="venta" required>
-                        {% if venta is not None %}
-                        <option value="{{ venta }}">-------{{ FAVenta.Descripcion }}-------</option>
-                        {% endif %}
+                        <option value="{{ FiltradoEstadoVenta.ID }}">-------{{ FiltradoEstadoVenta.Descripcion }}-------</option>
                         {% for dato in FEstatusOportu %}
                         <option value="{{ dato.ID }}">{{ dato.Descripcion }}</option>
                         {% endfor %}
@@ -84,9 +69,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">ACTIVIDAD <label>*</label></h6>
                     <select class="select2 form-control col-12" name="actividad" required>
-                        {% if actividad is not None %}
-                        <option value="{{ actividad }}">-------{{ actividad }}-------</option>
-                        {% endif %}
+                        <option value="{{ TOportunidad.SelectActividad }}">-------{{ TOportunidad.SelectActividad }}-------</option>
                         <option value="Distribuidor">Distribuidor</option>
                         <option value="Comisionista">Comisionista</option>
                         <option value="Consumidor">Consumidor</option>
@@ -96,9 +79,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">TIPO GANADO <label>*</label></h6>
                     <select class="select2 form-control col-12" name="tganado" required>
-                        {% if tganado is not None %}
-                        <option value="{{ tganado }}">-------{{ tganado }}-------</option>
-                        {% endif %}
+                        <option value="{{ TOportunidad.SelectTipoGanado }}">-------{{ TOportunidad.SelectTipoGanado }}-------</option>
                         <option value="Carne">Carne</option>
                         <option value="Lechero">Lechero</option>
                         <option value="Ambos">Ambos</option>
@@ -107,9 +88,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">DESTINO <label>*</label></h6>
                     <select class="select2 form-control col-12" name="destino" required>
-                        {% if destino is not None %}
-                        <option value="{{ destino }}">-------{{ destino }}-------</option>
-                        {% endif %}
+                        <option value="{{ TOportunidad.SelectDestino }}">-------{{ TOportunidad.SelectDestino }}-------</option>
                         <option value="Vende">Vende</option>
                         <option value="Exporta">Exporta</option>
                         <option value="Finaliza">Finaliza</option>
@@ -118,9 +97,7 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">ALIMENTACIÓN <label>*</label></h6>
                     <select class="select2 form-control col-12" name="alimentacion" required>
-                        {% if alimentacion is not None %}
-                        <option value="{{ alimentacion }}">-------{{ alimentacion }}-------</option>
-                        {% endif %}
+                        <option value="{{ TOportunidad.SelectAlimentacion }}">-------{{ TOportunidad.SelectAlimentacion }}-------</option>
                         <option value="Consume ensacado">Consume ensacado</option>
                         <option value="Prepara formula">Prepara formula</option>
                         <option value="Compra Mat. Primas">Compra Mat. Primas</option>
@@ -130,61 +107,33 @@
             <div class="row fila">
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">VOLUMEN <label>*</label></h6>
-                    {% if volumen is not None %}
                     <input type="text" autofocus name="volumen" class=" form-control"
-                        placeholder="Ingrese el volumen" value="{{volumen}}">
-                    {% else %}
-                    <input type="text" autofocus name="volumen" class=" form-control"
-                        placeholder="Ingrese el volumen">
-                    {% endif %}
+                        placeholder="Ingrese el volumen" value="{{TOportunidad.Volumen}}" >
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">MONTO </h6>
-                    {% if monto is not None %}
                     <input type="text" name="monto" class=" form-control" placeholder="Ingrese el monto"
-                        value="{{ monto }}">
-                    {% else %}
-                    <input type="text" name="monto" class=" form-control" placeholder="Ingrese el monto">
-                    {% endif %}
+                        value="{{ TOportunidad.MontoOpo }}">
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">FECHA CIERRE ESTIMADA</h6>
-                    {% if fechaCE is not None %}
                     <input type="date" name="fechaCE" class=" form-control" 
-                        value="{{ fechaCE }}">
-                    {% else %}
-                    <input type="date" name="fechaCE" class=" form-control" value="{{ FechaDeHoy }}">
-                    {% endif %}
+                        value="{{ TOportunidad.FechaCierreEstim|date:'Y-m-d' }}">
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">FECHA DE CIERRE</h6>
-                    {% if fechaC is not None %}
                     <input type="date" name="fechaC" class=" form-control" 
-                        value="{{ fechaC }}">
-                    {% else %}
-                    <input type="date" name="fechaC" class=" form-control" value="{{ FechaDeHoy }}">
-                    {% endif %}
+                        value="{{ TOportunidad.FechaDeCierre|date:'Y-m-d' }}">
                 </div>
             </div>
 
 
 
 
-            <div class="form-group form-check mb-3">
-                {% if guardar %}
-                <input type="checkbox" class="form-check-input" id="guardar" name="guardar-datos" checked>
-                {% else %}
-                <input type="checkbox" class="form-check-input" id="guardar" name="guardar-datos">
-                {% endif %}
-                <label class="form-check-label" for="guardar" data-toggle="tooltip" data-placement="top"
-                    title="Vuelve a llenar los campos del formulario">Almacenar datos</label>
-            </div>
-
+         
             <div class="form-group">
-                <button type="submit" class="btn btn-primary agregarBoton" name="agregar" id="agregarBoton">Guardar y
-                    agregar otro</button>
-                <button type="submit" class="btn btn-success salirBoton" name="salir" id="salirBoton">Guardar y
-                    salir</button>
+                <button type="submit" class="btn btn-primary agregarBoton" name="agregar" id="agregarBoton">Confirmar</button>
+                
                 <a href="{% url 'TCRM_Oportunidades'%}">
                     <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
                 </a>

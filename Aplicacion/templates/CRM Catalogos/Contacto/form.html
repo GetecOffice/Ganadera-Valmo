@@ -12,8 +12,8 @@
 <div class="card card-hdr">
     <div class="card-body">
         <h1>
-            <a href="{% url 'T-Cliente' %}" class="btn h6-form"><i class="fa-solid fa-arrow-left"></i></a>
-            AGREGAR CLIENTE
+           
+            FORMULARIO CONTACTO
         </h1>
 
         {% if messages %}
@@ -182,9 +182,9 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">Pais<label>*</label></h6>
                     {% if Pais is not None %}
-                    <input list="listaPais" class="form-control col-12" name="Pais" value="{{Pais}}" required>
+                    <input list="listaPais" class="form-control col-12" name="Pais" value="{{Pais}}">
                     {% else %}
-                    <input list="listaPais" class="form-control col-12" name="Pais" required>
+                    <input list="listaPais" class="form-control col-12" name="Pais">
                     {% endif %}
                     <datalist id="listaPais">
 
@@ -197,9 +197,9 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">Estado<label>*</label></h6>
                     {% if Estado is not None %}
-                    <input list="listaEstado" class="form-control col-12" name="Estado" value="{{Estado}}" required>
+                    <input list="listaEstado" class="form-control col-12" name="Estado" value="{{Estado}}">
                     {% else %}
-                    <input list="listaEstado" class="form-control col-12" name="Estado" required>
+                    <input list="listaEstado" class="form-control col-12" name="Estado">
                     {% endif %}
                     <datalist id="listaEstado">
 
@@ -212,10 +212,9 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">Municipio<label>*</label></h6>
                     {% if Municipio is not None %}
-                    <input list="listaMunicipio" class="form-control col-12" name="Municipio" value="{{Municipio}}"
-                        required>
+                    <input list="listaMunicipio" class="form-control col-12" name="Municipio" value="{{Municipio}}">
                     {% else %}
-                    <input list="listaMunicipio" class="form-control col-12" name="Municipio" required>
+                    <input list="listaMunicipio" class="form-control col-12" name="Municipio">
                     {% endif %}
                     <datalist id="listaMunicipio">
 
@@ -228,10 +227,9 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">Localidad<label>*</label></h6>
                     {% if Localidad is not None %}
-                    <input list="listaLocalidad" class="form-control col-12" name="Localidad" value="{{Localidad}}"
-                        required>
+                    <input list="listaLocalidad" class="form-control col-12" name="Localidad" value="{{Localidad}}">
                     {% else %}
-                    <input list="listaLocalidad" class="form-control col-12" name="Localidad" required>
+                    <input list="listaLocalidad" class="form-control col-12" name="Localidad">
                     {% endif %}
                     <datalist id="listaLocalidad">
 
@@ -244,9 +242,9 @@
                 <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                     <h6 class="h6-form">Colonia<label>*</label></h6>
                     {% if Colonia is not None %}
-                    <input list="listaColonia" class="form-control col-12" name="Colonia" value="{{Colonia}}" required>
+                    <input list="listaColonia" class="form-control col-12" name="Colonia" value="{{Colonia}}">
                     {% else %}
-                    <input list="listaColonia" class="form-control col-12" name="Colonia" required>
+                    <input list="listaColonia" class="form-control col-12" name="Colonia">
                     {% endif %}
                     <datalist id="listaColonia">
 
@@ -274,39 +272,14 @@
                     agregar otro</button>
                 <button type="submit" class="btn btn-success salirBoton" name="salir" id="salirBoton">Guardar y
                     salir</button>
-                <a href="{% url 'T-Cliente'%}">
+                <a href="{% url 'TCRM_Contacto'%}">
                     <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
                 </a>
             </div>
         </form>
     </div>
 </div>
-</div>
-<script>
-    document.getElementById("id_CP").addEventListener("change", function () {
-        let cp = this.value;
 
-        fetch(`/obtener-cp/?cp=${cp}`)
-            .then(response => response.json())
-            .then(data => {
-
-                let coloniaSelect = document.getElementById("id_Colonia");
-                coloniaSelect.innerHTML = "";
-
-                data.colonias.forEach(col => {
-                    let option = document.createElement("option");
-                    option.value = col;
-                    option.text = col;
-                    coloniaSelect.appendChild(option);
-                });
-
-                document.getElementById("id_Municipio").value = data.municipio;
-                document.getElementById("id_Estado").value = data.estado;
-                document.getElementById("id_Pais").value = "México";
-
-            });
-    });
-</script>
 {% else %}
 <div class="row centrar">
     <h6 class="h6-form">

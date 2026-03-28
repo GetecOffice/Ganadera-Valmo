@@ -11,7 +11,7 @@
 {% if perms.Aplicacion.add_tblestatus %}
 <div class="card card-hdr">
     <div class="card-body">
-        <h1>AGREGAR ACCIONES</h1>
+        <h1>FORMULARIO VENDEDORES</h1>
 
         {% if messages %}
         {% for message in messages %}
@@ -34,29 +34,29 @@
                     <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">ABREVIACIÓN<label>*</label></h6>
                         <input type="text" autofocus name="abreviacion" class="form-control input"
-                            placeholder="Ingrese una descripción (obligatorio)" required>
+                            placeholder="Ingrese una abreviación (obligatorio)" required>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">NOMBRE <label>*</label></h6>
                         <input type="text" autofocus name="nombre" class="form-control input"
-                            placeholder="Ingrese una descripción (obligatorio)" required>
+                            placeholder="Ingrese el nombre (obligatorio)" required>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">APELLIDOS <label>*</label></h6>
                         <input type="text" autofocus name="apellidos" class="form-control input"
-                            placeholder="Ingrese una descripción (obligatorio)" required>
+                            placeholder="Ingrese el primer apellido (obligatorio)" required>
                     </div>
                 </div>
                 <div class="row fila">
                     <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">EMAIL <label>*</label></h6>
                         <input type="text" autofocus name="email" class="form-control input"
-                            placeholder="Ingrese una descripción (obligatorio)" required>
+                            placeholder="Ingrese el email">
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">CELULAR <label>*</label></h6>
                         <input type="text" autofocus name="celular" class="form-control input"
-                            placeholder="Ingrese una descripción (obligatorio)" required>
+                            placeholder="Ingrese el numero celular">
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     agregar otro</button>
                 <button type="submit" class="btn btn-success salirBoton" name="salir">Guardar y
                     salir</button>
-                <a href="{% url 'TCRM_Acciones'%}">
+                <a href="{% url 'TCRM_Vendedores'%}">
                     <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
                 </a>
             </div>

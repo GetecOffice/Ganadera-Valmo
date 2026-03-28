@@ -8,7 +8,7 @@ from Aplicacion.CRUD import editarCatalogos, editarProcesos, editarSubTabla
 from Aplicacion.CRUD import reportes, DescargaPDF, DescargaExcel, CopiaDeSeguridad, CopiaAMysql, cliente
 from Aplicacion.CRUD import presentacion, Correo
 from Aplicacion.CRUD import CRMactualizarCatalogos, CRMeditarCatalogos, CRMformularioCatalogos, CRMguardarCatalogos, CRMmostrarCatalogos
-from Aplicacion.CRUD import CRMmostrarProcesos, CRMformularioProcesos, CRMguardarProcesos
+from Aplicacion.CRUD import CRMactualizarProcesos, CRMeditarProcesos, CRMformularioProcesos, CRMguardarProcesos, CRMmostrarProcesos
 
 # from .views import PDFView formularioCatalogos
 from django.contrib.auth.views import LoginView, LogoutView
@@ -462,13 +462,13 @@ urlpatterns = [
      path('Formulario_BitacoraInteres/', CRMformularioCatalogos.FormularioBitacoraInteres, name="FCRM_BitacoraInteres"),
 
      # CRM catalogos editar
-     path('Editar_Acciones/', CRMeditarCatalogos.EditarAcciones, name="ECRM_Acciones"),
-     path('Editar_TipoContacto/', CRMeditarCatalogos.EditarTipoContacto, name="ECRM_TipoContacto"),
-     path('Editar_Rutas/', CRMeditarCatalogos.EditarRutas, name="ECRM_Rutas"),
-     path('Editar_EstadoOportunidad/', CRMeditarCatalogos.EditarEstadoOportunidad, name="ECRM_EstadoOportunidad"),
-     path('Editar_Vendedores/', CRMeditarCatalogos.EditarVendedores, name="ECRM_Vendedores"),
-     path('Editar_Contacto/', CRMeditarCatalogos.EditarContacto, name="ECRM_Contacto"),
-     path('Editar_BitacoraInteres/', CRMeditarCatalogos.EditarBitacoraInteres, name="ECRM_BitacoraInteres"),
+     path('Mostrar_Acciones/Editar/<ID>', CRMeditarCatalogos.EditarAcciones, name="ECRM_Acciones"),
+     path('Mostrar_TipoContacto/Editar/<ID>', CRMeditarCatalogos.EditarTipoContacto, name="ECRM_TipoContacto"),
+     path('Mostrar_Rutas/Editar/<ID>', CRMeditarCatalogos.EditarRutas, name="ECRM_Rutas"),
+     path('Mostrar_EstadoOportunidad/Editar/<ID>', CRMeditarCatalogos.EditarEstadoOportunidad, name="ECRM_EstadoOportunidad"),
+     path('Mostrar_Vendedores/Editar/<ID>', CRMeditarCatalogos.EditarVendedores, name="ECRM_Vendedores"),
+     path('Mostrar_Contacto/Editar/<ID>', CRMeditarCatalogos.EditarContacto, name="ECRM_Contacto"),
+     path('Mostrar_BitacoraInteres/Editar/<ID>', CRMeditarCatalogos.EditarBitacoraInteres, name="ECRM_BitacoraInteres"),
 
      # CRM catalogos actualizar
      path('Actualizar_Acciones/', CRMactualizarCatalogos.actualizarAcciones, name="ACRM_Acciones"),
@@ -499,8 +499,10 @@ urlpatterns = [
 
      
      # CRM
+     path('Actualizar_oportunidades/', CRMactualizarProcesos.ActualizarOportunidades, name="ACRM_Oportunidades"),
      path('Formulario_oportunidades/', CRMformularioProcesos.FormularioOportunidades, name="FCRM_Oportunidades"),
      path('Mostrar_oportunidades/', CRMmostrarProcesos.TablaOportunidades, name="TCRM_Oportunidades"),
+     path('Mostrar_oportunidades/Editar/<ID>', CRMeditarProcesos.EditarOportunidad, name="ECRM_Oportunidades"),
      path('guardar_oportunidades/', CRMguardarProcesos.guardarOportunidad, name="GCRM_Oportunidades"),
      
 ]

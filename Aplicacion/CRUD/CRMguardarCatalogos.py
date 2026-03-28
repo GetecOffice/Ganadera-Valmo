@@ -10,8 +10,8 @@ from Aplicacion.views import servicioActivo,grupo_user
 
 # --------------------------------------------------------CLIENTES---------------------------------------------------------
 def guardarAcciones(request):
-    Descripcion_v = request.POST['descripcion'].upper()    
-    # Descripcion_v = request.POST['descripcion'].upper()    
+    Descripcion_v = request.POST['descripcion'].title()    
+    # Descripcion_v = request.POST['descripcion'].title()    
     existente = tblCRMAcciones.objects.filter(Descripcion=Descripcion_v).exists()
     if existente:
         errorCol = 'error'
@@ -32,8 +32,8 @@ def guardarAcciones(request):
    
 
 def guardarTipoContacto(request):
-    Descripcion_v = request.POST['descripcion'].upper()    
-    abreviacion_v = request.POST['abreviacion'].upper()    
+    Descripcion_v = request.POST['descripcion'].title()    
+    abreviacion_v = request.POST['abreviacion'].title()    
     existente = tblCRMTipoContacto.objects.filter(Descripcion=Descripcion_v).exists()
     if existente:
         errorCol = 'error'
@@ -54,8 +54,8 @@ def guardarTipoContacto(request):
 
 
 def guardarRutas(request):
-    Descripcion_v = request.POST['descripcion'].upper()    
-    abreviacion_v = request.POST['abreviacion'].upper()    
+    Descripcion_v = request.POST['descripcion'].title()    
+    abreviacion_v = request.POST['abreviacion'].title()    
     existente = tblCRMRutas.objects.filter(Descripcion=Descripcion_v).exists()
     if existente:
         errorCol = 'error'
@@ -76,8 +76,8 @@ def guardarRutas(request):
 
 
 def guardarEstadoOportunidad(request):
-    Descripcion_v = request.POST['descripcion'].upper()    
-    abreviacion_v = request.POST['abreviacion'].upper()    
+    Descripcion_v = request.POST['descripcion'].title()    
+    abreviacion_v = request.POST['abreviacion'].title()    
     existente = tblCRMEstadoOportu.objects.filter(Descripcion=Descripcion_v).exists()
     if existente:
         errorCol = 'error'
@@ -98,9 +98,9 @@ def guardarEstadoOportunidad(request):
 
 
 def guardarVendedores(request):
-    abreviacion_v = request.POST['abreviacion'].upper()    
-    nombre_v = request.POST['nombre'].upper()  
-    apellidos_v = request.POST['apellidos'].upper()    
+    abreviacion_v = request.POST['abreviacion'].title()    
+    nombre_v = request.POST['nombre'].title()  
+    apellidos_v = request.POST['apellidos'].title()    
     email_v = request.POST['email']
     celular_v = request.POST['celular']    
 
@@ -119,22 +119,22 @@ def guardarContacto(request):
     ruta_v = request.POST['ruta']
     cliente_v = request.POST['cliente']
     tcontacto_v = request.POST['tcontacto']
-    nombre_v = request.POST['nombre'].upper()
-    papellido_v = request.POST['papellido'].upper()
-    sapellido_v = request.POST['sapellido'].upper()
+    nombre_v = request.POST['nombre'].title()
+    papellido_v = request.POST['papellido'].title()
+    sapellido_v = request.POST['sapellido'].title()
     fecha_v = request.POST['fecha']
     numeroC_v = request.POST['numeroC']
     email_v = request.POST['email']
     numeroO_v = request.POST['numeroO']
-    direccion_v = request.POST['direccion'].upper()
+    direccion_v = request.POST['direccion'].title()
     numerod_v = request.POST['numerod']
     referencia_v = request.POST['referencia']
     cp_v = request.POST['cp']
-    Pais_v = request.POST['Pais'].upper()
-    Estado_v = request.POST['Estado'].upper()
-    Municipio_v = request.POST['Municipio'].upper()      
-    Localidad_v = request.POST['Localidad'].upper()            
-    Colonia_v = request.POST['Colonia'].upper()            
+    Pais_v = request.POST['Pais'].title()
+    Estado_v = request.POST['Estado'].title()
+    Municipio_v = request.POST['Municipio'].title()      
+    Localidad_v = request.POST['Localidad'].title()            
+    Colonia_v = request.POST['Colonia'].title()            
 
     ultimo_id = tblCRMContactos.objects.order_by('-ID').first()
     if ultimo_id:
@@ -194,10 +194,10 @@ def guardarContacto(request):
 def guardarCliente(request):
     # PARAMETROS ENVIADOS DESDE EL FORMULARIO
     clave = request.POST['clave']
-    nombre = request.POST['nombre'].upper()
-    contacto = request.POST['contacto'].upper()
-    direccion = request.POST['direccion'].upper()
-    ciudad = request.POST['ciudad'].upper()
+    nombre = request.POST['nombre'].title()
+    contacto = request.POST['contacto'].title()
+    direccion = request.POST['direccion'].title()
+    ciudad = request.POST['ciudad'].title()
     rfc = request.POST['rfc']
     email = request.POST['email']
     numero = request.POST['numero']
