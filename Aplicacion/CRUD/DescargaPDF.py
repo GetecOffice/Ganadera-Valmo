@@ -266,11 +266,11 @@ def movimientoAnimales(request):
     
     dataInput= request.POST.get('movimientoAnimales', '')
     if dataInput is not None and dataInput != '':
-        Detalle = tblDetalleMovAnimales.objects.filter(IDFolio = dataInput).values('ID', 'IDFolio', 'IDAnimales_id__Descripcion', 'Cantidad', 'PesoTotal', 'PesoPromedio')
+        Detalle = tblDetalleMovAnimales.objects.filter(IDFolio = dataInput).values('ID', 'IDFolio', 'IDCorral_id__Descripcion', 'IDAnimales_id__Descripcion', 'Cantidad', 'PesoTotal', 'PesoPromedio')
 
         movimientoAnimales = tblMovimientoAnimales.objects.get(Folio = dataInput)
         Cliente = movimientoAnimales.IDCliente.ID
-        Corral = movimientoAnimales.IDCorral.ID
+        # Corral = movimientoAnimales.IDCorral.ID
         movimiento = movimientoAnimales.IDMovimiento.ID
         if movimiento == 1 or movimiento == "1":
             mov = "Entrada"
@@ -278,9 +278,9 @@ def movimientoAnimales(request):
             mov = "Sálida"
         # fecha = movimientoAnimales.Fecha
         FiltradoCliente = tblClientes.objects.get(ID=Cliente)
-        FiltradoCorral = tblCorrales.objects.get(ID=Corral)
+        # FiltradoCorral = tblCorrales.objects.get(ID=Corral)
     # Render the HTML template with the data
-    html_string = render_to_string('Descargas/PDF/MovimientoAnimales/index.html', {'logo_url': logo_url, 'Detalle':Detalle, 'corral':FiltradoCorral,
+    html_string = render_to_string('Descargas/PDF/MovimientoAnimales/index.html', {'logo_url': logo_url, 'Detalle':Detalle,
     'formatoClave':formatoClave, 'fecha_actual': fecha_actual, 'movimientoAnimales':movimientoAnimales, 'procedencia': FiltradoCliente})
 
     # Create a BytesIO buffer to receive the PDF

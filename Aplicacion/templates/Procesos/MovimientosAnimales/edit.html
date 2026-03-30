@@ -11,7 +11,8 @@
 <div class="card card-hdr">
     <div class="card-body">
         <h1>
-            <a href="{% url 'T-MovAnimales' %}" class="btn h6-form"><i class="fa fa-arrow-left"><</i></a>
+            <a href="{% url 'T-MovAnimales' %}" class="btn h6-form"><i class="fa fa-arrow-left">
+                    <</i></a>
             EDITAR MOVIMIENTOS ANIMALES # {{ TMovimientoAnimales.Folio }}
         </h1>
         <form action="/ActualizarMovimientosAnimales/" method="POST" autocomplete="off">{% csrf_token %}
@@ -21,7 +22,7 @@
                 <input type="hidden" class="form-control" name="tecnico"
                     value="{{ user.first_name }} {{user.last_name}}">
                 <div class="row mr-1 ml-1 fila">
-                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
+                    <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">CLIENTE <label>*</label></h6>
                         <select class="select2 form-control col-12" name="cliente" required>
                             <option value="{{FiltradoCliente.ID}}">
@@ -32,40 +33,27 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
-                        <h6 class="h6-form">CORRAL <label>*</label></h6>
-                        <select class="select2 form-control col-12" name="corral" required>
-                            <option value="{{FiltradoCorral.ID}}">
-                                --------{{FiltradoCorral.Descripcion}}--------
-                            </option>
-                            {% for Corral in FECorral %}
-                            <option value="{{ Corral.ID }}">{{ Corral.Descripcion }}</option>
-                            {% endfor %}
-                        </select>
+                    <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                        <h6 class="h6-form">FECHA <label>*</label></h6>
+                        <input type="datetime-local" name="fecha" value="{{fecha|date:'Y-m-d H:i'}}"
+                            class="form-control" required>
                     </div>
                 </div>
 
                 <div class="row mr-1 ml-1 fila">
-                    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 columna">
-                        <h6 class="h6-form">PESO <label>*</label></h6>
-                        <input type="tel" name="peso" value="{{TMovimientoAnimales.Peso}}" class="form-control"
-                            placeholder="Ingrese el peso" required>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 columna">
+
+                    <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">No. GUIA</h6>
                         <input type="text" name="guia" value="{{TMovimientoAnimales.No_Guia}}" class="form-control"
                             placeholder="Ingrese No. GUIA">
                     </div>
 
-                    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 columna">
+                    <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">No. PARTIDA</h6>
                         <input type="text" name="partida" value="{{TMovimientoAnimales.NoPartida}}"
                             placeholder="Ingrese No. Partida" class="form-control">
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 columna">
-                        <h6 class="h6-form">FECHA <label>*</label></h6>
-                        <input type="datetime-local" name="fecha" value="{{fecha|date:'Y-m-d H:i'}}" class="form-control" required>
-                    </div>
+
                 </div>
 
                 <div class="row mr-1 ml-1 fila">

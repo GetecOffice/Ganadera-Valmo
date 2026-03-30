@@ -12,51 +12,51 @@
 <div class="card card-hdr">
     <div class="card-body">
         <h1>
-            <a href="{% url 'T-MovAnimales' %}" class="btn h6-form"><i class="fa fa-arrow-left"><</i></a>
+            <a href="{% url 'T-MovAnimales' %}" class="btn h6-form"><i class="fa fa-arrow-left">
+                    <</i></a>
             AGREGAR MOVIMIENTO ANIMALES
         </h1>
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-md-6 col-lg-4">
                 <form action="/Guardar-Movimiento-De-Amimales/" method="POST" autocomplete="off">{% csrf_token %}
                     <input type="hidden" class="form-control" name="clave" value="{{AgMovimientos.ID}}">
                     <input type="hidden" class="form-control" name="tecnico"
                         value="{{ user.first_name }} {{user.last_name}}">
                     <div class="row mr-1 ml-1 pt-3 fila">
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                        <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                             <h6 class="h6-form">CLIENTE:</h6>
+                            <input type="hidden" name="idcliente" value="{{ FiltradoCliente.ID }}">
                             <label> {{ FiltradoCliente.Nombre }}</label>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
-                            <h6 class="h6-form">CORRAL:</h6>
-                            <label>{{ FiltradoCorral.Descripcion }}</label>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                        <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                             <h6 class="h6-form">MOVIMIENTO:</h6>
                             <label>{{ FiltradoMovimiento.Descripcion }}</label>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row mr-1 ml-1 fila">
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                        <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                             <h6 class="h6-form">PESO:</h6>
                             <input type="hidden" value="{{AgMovimientos.Peso}}" name="peso">
                             <label> {{AgMovimientos.Peso}}</label>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                    </div>
+                    <hr>
+                    <div class="row mr-1 ml-1 fila">
+
+                        <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                             <h6 class="h6-form">No. GUIA</h6>
                             <label>{{AgMovimientos.No_Guia}}</label>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                        <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                             <h6 class="h6-form">No. PART.</h6>
                             <label>{{AgMovimientos.NoPartida}}</label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                            <h6 class="h6-form">FECHA</h6>
+                            <label>{{AgMovimientos.Fecha}}</label>
                         </div>
                     </div>
                     <hr>
                     <div class="row mr-1 ml-1 fila">
-                        <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 columna">
-                            <h6 class="h6-form">FECHA</h6>
-                            <label>{{AgMovimientos.Fecha}}</label>
-                        </div>
+
                         <div class="col-sm-12 col-md-12 col-lg-7 col-xl-7 columna">
                             <h6 class="h6-form">NOTAS</h6>
                             <label>{{AgMovimientos.Notas}}</label>
@@ -65,6 +65,14 @@
             </div>
             <div class="col-sm-12 col-md col-sm" style="border: 1px rgb(124, 124, 124) solid;">
                 <div class="row mr-1 ml-1 pt-3">
+                    <div class="col-sm-12 col-md-12 col-lg col-xl columna">
+                        <h6 class="h6-form">CORRAL <label>*</label></h6>
+                        <select class="select2 form-control" style="width: 100%;" name="corral" required>
+                            {% for data in FiltradoCorral %}
+                            <option value="{{ data.ID }}">{{ data.Descripcion }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="col-sm-12 col-md-12 col-lg col-xl columna">
                         <h6 class="h6-form">TIPO ANIMAL <label>*</label></h6>
                         <select class="select2 form-control" style="width: 100%;" name="animal" required>
@@ -89,10 +97,10 @@
                     </div>
                 </div>
                 <div class="form-group fila mt-3 mb-3">
-                    <button type="submit" class="btn btn-primary agregarBoton" name="agregar" id="agregarBoton">Guardar
-                        y agregar otro</button>
-                    <button type="submit" class="btn btn-success salirBoton" name="salir" id="salirBoton">Guardar y
-                        salir</button>
+                    <button type="submit" class="btn btn-primary agregarBoton" name="agregar"
+                        id="agregarBoton">Confirmar</button>
+                    <!-- <button type="submit" class="btn btn-success salirBoton" name="salir" id="salirBoton">Guardar y
+                        salir</button> -->
                     <a href="{% url 'T-MovAnimales'%}">
                         <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
                     </a>
@@ -112,6 +120,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="th-responsive">FOLIO</th>
+                            <th scope="col" class="th-responsive">corral</th>
                             <th scope="col" class="th-responsive">Animal</th>
                             <th scope="col" class="th-responsive">Cantidad</th>
                             <th scope="col" class="th-responsive">Peso Promedio</th>
@@ -124,6 +133,10 @@
                             <th scope="row" style="border-bottom: 1px white solid;">
                                 <h6 class="td-responsive">ID:</h6>{{ animales.IDFolio }}
                             </th>
+                            <td class="td-agregar">
+                                <h6 class="td-responsive">ANIMAL:</h6>
+                                {{ animales.IDCorral_id__Descripcion}}
+                            </td>
                             <td class="td-agregar">
                                 <h6 class="td-responsive">ANIMAL:</h6>
                                 {{ animales.IDAnimales_id__Descripcion}}

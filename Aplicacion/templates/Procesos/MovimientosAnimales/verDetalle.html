@@ -30,6 +30,7 @@
                 <thead>
                     <tr>
                         <th scope="col">FOLIO</th>
+                        <th scope="col">corral</th>
                         <th scope="col">Animal</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Peso promedio</th>
@@ -43,6 +44,7 @@
                     {% for animales in Detalle%}
                     <tr>
                         <th scope="row">{{ animales.IDFolio }}</th>
+                        <td>{{ animales.IDCorral_id__Descripcion}}</td>
                         <td>{{ animales.IDAnimales_id__Descripcion}}</td>
                         <td>{{ animales.Cantidad }}</td>
                         <td>{{ animales.PesoPromedio }} Kg</td>

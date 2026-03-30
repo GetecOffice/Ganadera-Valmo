@@ -12,7 +12,8 @@
 <div class="card card-hdr">
     <div class="card-body">
         <h1>
-            <a href="{% url 'T-MovAnimales' %}" class="btn h6-form"><i class="fa fa-arrow-left"><</i></a>
+            <a href="{% url 'T-MovAnimales' %}" class="btn h6-form"><i class="fa fa-arrow-left">
+                    <</i></a>
             AGREGAR MOVIMIENTOS ANIMALES
         </h1>
 
@@ -26,7 +27,7 @@
 
         <form action="/Guardar-Movimiento-Animales/" method="POST" autocomplete="off">{% csrf_token %}
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="col-sm-12 col-md-12 col-lg-4">
                     <input type="hidden" class="form-control" name="clave" value="{{ ultimo_folio }}">
                     <input type="hidden" class="form-control" name="tecnico"
                         value="{{ user.first_name }} {{user.last_name}}">
@@ -62,20 +63,7 @@
                     </div>
                     <br>
                     <div class="row mr-1 ml-1 fila">
-                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
-                            <h6 class="h6-form">CORRAL <label>*</label></h6>
-                            {% if Agrego_aniamles %}
-                            <input type="hidden" value="{{Agrego_aniamles.corral}}" name="corral">
-                            <input type="text" value="{{FiltradoCorral.Descripcion}}" class="form-control" readonly>
-                            {% else %}
-                            <select class="select2 form-control col-12" name="corral" required id="select-corral">
-                                <option value="">Selecciona corral</option>
-                                {% for Corral in FCorral %}
-                                <option value="{{ Corral.ID }}">{{ Corral.Descripcion }}</option>
-                                {% endfor %}
-                            </select>
-                            {% endif %}
-                        </div>
+
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
                             {% if Agrego_aniamles %}
                             <h6 class="h6-form">FECHA <label>*</label></h6>
@@ -93,10 +81,7 @@
                             {% endif %}
                             {% endif %}
                         </div>
-                    </div>
-                    <br>
-                    <div class="row mr-1 ml-1 fila">
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
                             <h6 class="h6-form">PESO POR LOTE<label>*</label></h6>
                             {% if Agrego_aniamles %}
                             <input type="text" name="peso" value="{{Agrego_aniamles.peso}}" class="form-control"
@@ -106,7 +91,11 @@
                                 placeholder="Ingrese el peso" readonly>
                             {% endif %}
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                    </div>
+                    <br>
+                    <div class="row mr-1 ml-1 fila">
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
                             <h6 class="h6-form">No. GUIA</h6>
                             {% if Agrego_aniamles %}
                             <input type="text" name="guia" value="{{Agrego_aniamles.guia}}" class="form-control"
@@ -121,7 +110,7 @@
                             {% endif %}
                         </div>
                         <br>
-                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 columna">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 columna">
                             <h6 class="h6-form">No. PARTIDA</h6>
                             {% if Agrego_aniamles %}
                             <input type="text" name="partida" value="{{Agrego_aniamles.partida}}" class="form-control"
@@ -155,11 +144,11 @@
                         <button type="submit" class="btn btn-success salirBoton" name="salir" id="salirBoton">Guardar y
                             salir</button>
                         <a href="{% url 'T-MovAnimales'%}">
-                            <button type="button" class="btn btn-danger cancelarBoton">Cancelar</button>
+                            <button type="button" class="btn btn-warning cancelarBoton">salir</button>
                         </a>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="col-sm-12 col-md-12 col-lg-8">
                     <div class="card card-hdr-procesos mt-3 mb-3 p-4">
                         <div class="row mb-3">
                             <div class="col-8">
@@ -174,18 +163,30 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="th-responsive col-2">FOLIO</th>
-                                    <th scope="col" class="th-responsive col-3">TIPO ANIMAL</th>
-                                    <th scope="col" class="th-responsive col-3">CANTIDAD</th>
-                                    <th scope="col" class="th-responsive col-3">PESO TOTAL</th>
+                                    <th scope="col" class="th-responsive" colspan="3">FOLIO</th>
+                                    <th scope="col" class="th-responsive" colspan="3">CORRAL</th>
+                                    <th scope="col" class="th-responsive" colspan="3">TIPO ANIMAL</th>
+                                    <th scope="col" class="th-responsive" colspan="3">CANTIDAD</th>
+                                    <th scope="col" class="th-responsive" colspan="3">PESO TOTAL</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row" style="border-bottom: 1px white solid;">
+                                    <th scope="row" style="border-bottom: 1px white solid;" colspan="3">
                                         {{ formatoClave }}
                                     </th>
-                                    <td class="td-agregar">
+                                    <td class="td-agregar" colspan="3">
+
+                                        <select class="select2 form-control col-12" name="corral" required
+                                            id="select-corral">
+
+                                            {% for Corral in FCorral %}
+                                            <option value="{{ Corral.ID }}">{{ Corral.Descripcion }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </td>
+                                    <td class="td-agregar" colspan="3">
                                         <h6 class="td-responsive">ANIMAL:</h6>
                                         <select class="select2 form-control" style="width: 100%;" name="animal"
                                             required>
@@ -194,7 +195,7 @@
                                             {% endfor %}
                                         </select>
                                     </td>
-                                    <td class="td-agregar">
+                                    <td class="td-agregar" colspan="3">
                                         <h6 class="td-responsive">CANTIDAD ANIMAL:</h6>
                                         <input type="text" name="cantidad" autofocus class="form-control"
                                             placeholder="Ingrese la cantidad (obligatorio)" required step="1"
@@ -203,7 +204,7 @@
                                             No se permiten puntos decimales.
                                         </div>
                                     </td>
-                                    <td class="td-agregar">
+                                    <td class="td-agregar" colspan="3">
                                         <h6 class="td-responsive">PESO TOTAL:</h6>
                                         <input type="text" name="pesoTotal" class="form-control"
                                             placeholder="Ingrese el peso" required step="1">
@@ -212,18 +213,22 @@
                                 {% for animales in Detalle%}
 
                                 <tr>
-                                    <th scope="row" style="border-bottom: 1px white solid;">
+                                    <th scope="row" style="border-bottom: 1px white solid;" colspan="3">
                                         <h6 class="td-responsive">ID:</h6>{{ animales.IDFolio }}
                                     </th>
-                                    <td class="td-agregar">
+                                    <td class="td-agregar" colspan="3">
+                                        <h6 class="td-responsive">CORRAL:</h6>
+                                        {{ animales.IDCorral_id__Descripcion}}
+                                    </td>
+                                    <td class="td-agregar" colspan="3">
                                         <h6 class="td-responsive">TIPO ANIMAL:</h6>
                                         {{ animales.IDAnimales_id__Descripcion}}
                                     </td>
-                                    <td class="td-agregar">
+                                    <td class="td-agregar" colspan="3">
                                         <h6 class="td-responsive">CANTIDAD:</h6>
                                         {{ animales.Cantidad }}
                                     </td>
-                                    <td class="td-agregar">
+                                    <td class="td-agregar" colspan="3">
                                         <h6 class="td-responsive">PESO TOTAL:</h6>
                                         {{ animales.PesoTotal }}
                                     </td>

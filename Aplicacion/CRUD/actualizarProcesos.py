@@ -188,6 +188,7 @@ def actualizarPeso(peso, folio):
 def actualizarCantidadAnimales(request):
     id_v = request.POST['id']
     folio_v = request.POST['folio']
+    corral_v = request.POST['corral']
     animal_v = request.POST['animal']
     cantidad_v = request.POST['cantidad']
     pesoTotal_v = request.POST['pesoTotal']
@@ -200,7 +201,9 @@ def actualizarCantidadAnimales(request):
     
     cantidadAnimales = tblDetalleMovAnimales.objects.get(ID=id_v)
     animal_instancia = tblAnimalesTipo.objects.get(ID=animal_v)
+    corral_instancia = tblCorrales.objects.get(ID=corral_v)
    
+    cantidadAnimales.IDCorral = corral_instancia
     cantidadAnimales.IDAnimales = animal_instancia
     cantidadAnimales.Cantidad = cantidad_v
     cantidadAnimales.PesoPromedio = pesoPromedio
@@ -221,8 +224,8 @@ def actualizarMovimientosAniamales(request):
     id_v = request.POST['id']
     folio_v = request.POST['folio']
     cliente_v = request.POST['cliente']
-    corral_v = request.POST['corral']
-    peso_v = request.POST['peso']
+    # corral_v = request.POST['corral']
+    # peso_v = request.POST['peso']
     guia_v = request.POST['guia']
     partida_v = request.POST['partida']
     fecha_v = request.POST['fecha']
@@ -240,11 +243,11 @@ def actualizarMovimientosAniamales(request):
 
     movimiento_animales_save = tblMovimientoAnimales.objects.get(ID=id_v)
     Cliente_instancia = tblClientes.objects.get(ID=cliente_v)
-    Corral_instancia = tblCorrales.objects.get(ID=corral_v)
+    # Corral_instancia = tblCorrales.objects.get(ID=corral_v)
 
     movimiento_animales_save.IDCliente = Cliente_instancia
-    movimiento_animales_save.IDCorral = Corral_instancia
-    movimiento_animales_save.Peso = peso_v
+    # movimiento_animales_save.IDCorral = Corral_instancia
+    # movimiento_animales_save.Peso = peso_v
     movimiento_animales_save.No_Guia = guia_v
     movimiento_animales_save.NoPartida = partida_v
     movimiento_animales_save.Fecha = fecha_v

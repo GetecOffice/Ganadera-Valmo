@@ -454,7 +454,8 @@ def guardarMovimientos(request):
     formatoClave = 'F-{:06d}'.format(clave_int)
     folio_Existe = tblMovimientoAnimales.objects.filter(Folio=formatoClave).exists()
     ServiciosWeb = servicioActivo()
-    
+    corral = request.POST['corral']
+    idcliente = request.POST['idcliente']
     animal = request.POST['animal']
     cantidad = request.POST['cantidad']
     pesoTotal = request.POST['pesoTotal']
@@ -478,18 +479,18 @@ def guardarMovimientos(request):
     
     AgMovimientos = tblMovimientoAnimales.objects.get(ID=clave)
     Cliente = AgMovimientos.IDCliente.ID
-    Corral = AgMovimientos.IDCorral.ID
+    # Corral = AgMovimientos.IDCorral.ID
     #Corral = tblCorrales.objects.get(IDCliente_ID=Cliente).ID
     Movimiento = AgMovimientos.IDMovimiento.ID
-    FiltradoCliente = tblClientes.objects.get(ID=Cliente)
-    FiltradoCorral = tblCorrales.objects.get(ID=Corral)
-    FiltradoMovimiento = tblTipoMov.objects.get(ID=Movimiento)
+    FiltradoCliente = tblClientes.objects.get(ID = Cliente)
+    FiltradoMovimiento = tblTipoMov.objects.get(ID = Movimiento)
+    FiltradoCorral = tblCorrales.objects.filter(IDCliente = idcliente)
     FTipoAnimal = tblAnimalesTipo.objects.all()
 
-    Detalle = tblDetalleMovAnimales.objects.filter(IDFolio=formatoClave).values('IDFolio', 'IDAnimales_id__Descripcion', 'Cantidad', 'PesoPromedio', 'PesoTotal')
+    Detalle = tblDetalleMovAnimales.objects.filter(IDFolio=formatoClave).values('IDFolio', 'IDCorral_id__Descripcion', 'IDAnimales_id__Descripcion', 'Cantidad', 'PesoPromedio', 'PesoTotal')
 
     tblDetalleMovAnimales.objects.create(
-        IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
+        IDFolio = formatoClave, IDAnimales_id = animal,IDCorral_id = corral,  Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
     )
     agregarDatosTecnicos(request, Tecnico_v, NombreTabla_v, IDFilaTabla_v, AreaRegistro_v, IDFila_v)
     messages.success(request, f'Se ha agregado exitosamente el registro de {cantidad} animal(es)')
@@ -499,8 +500,8 @@ def guardarMovimientos(request):
             return redirect('T-MovAnimales')
         elif 'agregar' in request.POST:
             return render(request, "Procesos/MovimientosAnimales/agregar.html", {'formatoClave':formatoClave, 'ServiciosWeb': ServiciosWeb, 
-            'Detalle':Detalle,'AgMovimientos': AgMovimientos, 'FiltradoCliente':FiltradoCliente, 
-            'FiltradoCorral':FiltradoCorral, 'FiltradoMovimiento':FiltradoMovimiento, 'FTipoAnimal':FTipoAnimal })
+            'Detalle':Detalle,'AgMovimientos': AgMovimientos, 'FiltradoCliente':FiltradoCliente,  'FiltradoCorral':FiltradoCorral,
+            'FiltradoMovimiento':FiltradoMovimiento, 'FTipoAnimal':FTipoAnimal })
     else:
         return redirect('T-MovAnimales')
 
@@ -522,6 +523,7 @@ def guardarMovimientoAniamles(request):
     animal = request.POST['animal']
     cantidad = request.POST['cantidad']
     pesoTotal = request.POST['pesoTotal']
+    FCorral = tblCorrales.objects.filter(IDCliente = cliente)
     pesoPromedio = round(float(pesoTotal) / float(cantidad), 2)
     peso += float(pesoTotal)
 
@@ -547,12 +549,12 @@ def guardarMovimientoAniamles(request):
             if folio_Existe:
                 if cantidad != '':
                     tblDetalleMovAnimales.objects.create(
-                        IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
+                        IDFolio = formatoClave, IDAnimales_id = animal, IDCorral_id = corral, Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
                     )
                     actualizarPeso(peso, formatoClave)
             else:
                 tblMovimientoAnimales.objects.create(
-                Folio = formatoClave,  IDCliente_id = cliente, IDCorral_id = corral, IDMovimiento_id = movimiento,  
+                Folio = formatoClave,  IDCliente_id = cliente,  IDMovimiento_id = movimiento,  
                 Fecha = fecha, Peso = peso, NoPartida = partida, No_Guia = guia, Notas = notas
             )
 
@@ -564,12 +566,12 @@ def guardarMovimientoAniamles(request):
             if folio_Existe:
                 if cantidad != '0' or cantidad != 0 or cantidad != '':
                     tblDetalleMovAnimales.objects.create(
-                    IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
+                    IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, IDCorral_id = corral,  PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
                     )
                     actualizarPeso(peso, formatoClave)
             else:
                 tblMovimientoAnimales.objects.create(
-                    Folio = formatoClave,  IDCliente_id = cliente, IDCorral_id = corral, IDMovimiento_id = movimiento,  
+                    Folio = formatoClave,  IDCliente_id = cliente,  IDMovimiento_id = movimiento,  
                     Fecha = fecha, Peso = peso, NoPartida = partida, No_Guia = guia, Notas = notas
                 )
 
@@ -579,30 +581,30 @@ def guardarMovimientoAniamles(request):
         
         elif 'guardarAnimal' in request.POST:
             folio_Existe = tblMovimientoAnimales.objects.filter(Folio=formatoClave).exists()
-            Detalle = tblDetalleMovAnimales.objects.filter(IDFolio=formatoClave).values('IDFolio', 'IDAnimales_id__Descripcion', 'Cantidad', 'PesoTotal')
+            Detalle = tblDetalleMovAnimales.objects.filter(IDFolio=formatoClave).values('IDFolio','IDCorral_id__Descripcion', 'IDAnimales_id__Descripcion', 'Cantidad', 'PesoTotal')
             FiltradoCliente= tblClientes.objects.get(ID=cliente)
             FiltradoCorral= tblCorrales.objects.get(ID=corral)
             FiltradoMovimiento = tblTipoMov.objects.get(ID=movimiento)
             if folio_Existe:
                 tblDetalleMovAnimales.objects.create(
-                    IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
+                    IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, IDCorral_id = corral, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
                 )
                 
                 messages.success(request, f'El animal se guardo el animal correctamente')
             else:
                 tblMovimientoAnimales.objects.create(
-                    Folio = formatoClave,  IDCliente_id = cliente, IDCorral_id = corral, IDMovimiento_id = movimiento,  
+                    Folio = formatoClave,  IDCliente_id = cliente,  IDMovimiento_id = movimiento,  
                     Fecha = fecha, Peso = peso, NoPartida = partida, No_Guia = guia, Notas = notas
                 )
                 tblDetalleMovAnimales.objects.create(
-                    IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
+                    IDFolio = formatoClave, IDAnimales_id = animal, Cantidad = cantidad, IDCorral_id = corral, PesoTotal = pesoTotal, PesoPromedio = pesoPromedio
                 )
 
             agregarDatosTecnicos(request, Tecnico_v, NombreTabla_v, IDFilaTabla_v, AreaRegistro_v, IDFila_v)
             messages.success(request, f'El movimiento se ha registrado exitosamente')
             return render(request, "Procesos/MovimientosAnimales/form.html", {'formatoClave':formatoClave,'Agrego_aniamles':Agrego_aniamles, 
                     'Detalle':Detalle,'ultimo_folio': clave, 'folio_Existe':folio_Existe, 'FTipoAnimal':FTipoAnimal, 'ServiciosWeb': ServiciosWeb, 
-                    'FiltradoCliente':FiltradoCliente,'FiltradoCorral':FiltradoCorral,'FiltradoMovimiento':FiltradoMovimiento })
+                    'FiltradoCliente':FiltradoCliente,'FiltradoCorral':FiltradoCorral,'FiltradoMovimiento':FiltradoMovimiento, 'FCorral':FCorral })
     else:
         return redirect('T-MovAnimales')
 
@@ -626,7 +628,7 @@ def guardarDetallesAniamles(request):
     IDFila_v = clave
 
     tblMovimientoAnimales.objects.create(
-        Folio = formatoClave,  IDCliente_id = cliente, IDCorral_id = corral, IDAnimal_id = animal,
+        Folio = formatoClave,  IDCliente_id = cliente, IDAnimal_id = animal,
         IDMovimiento_id = movimiento,  Fecha = fecha, Cantidad = cantidad, Peso = peso,
         NoPartida = partida, No_Guia = guia, Notas = notas
     )
